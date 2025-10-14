@@ -37,6 +37,13 @@ if %errorlevel% neq 0 (
     echo Making commit...
     "C:\Program Files\Git\bin\git.exe" commit -m "Fix Google OAuth redirect URI and email configuration issues"
     
+    REM Ask user for GitHub repository URL
+    set /p github_url="Enter your GitHub repository URL (e.g., https://github.com/username/repo.git): "
+    
+    REM Set the remote origin
+    echo Setting remote origin to %github_url%...
+    "C:\Program Files\Git\bin\git.exe" remote set-url origin %github_url%
+    
     REM Push to origin main
     echo Pushing to GitHub...
     "C:\Program Files\Git\bin\git.exe" push -u origin main
@@ -45,6 +52,23 @@ if %errorlevel% neq 0 (
     echo Changes successfully pushed to GitHub!
 ) else (
     echo No changes to commit.
+    
+    REM Ask user if they want to push anyway
+    set /p push_anyway="No changes to commit. Do you want to push anyway? (y/n): "
+    if /i "%push_anyway%"=="y" (
+        set /p github_url="Enter your GitHub repository URL (e.g., https://github.com/username/repo.git): "
+        
+        REM Set the remote origin
+        echo Setting remote origin to %github_url%...
+        "C:\Program Files\Git\bin\git.exe" remote set-url origin %github_url%
+        
+        REM Push to origin main
+        echo Pushing to GitHub...
+        "C:\Program Files\Git\bin\git.exe" push -u origin main
+        
+        echo.
+        echo Repository pushed to GitHub!
+    )
 )
 
 echo.
