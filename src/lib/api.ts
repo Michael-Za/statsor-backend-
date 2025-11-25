@@ -1,6 +1,171 @@
-import axios from 'axios';
 import { toast } from 'sonner';
 import { supabase } from './supabase';
+
+// Enhanced API utility with retry logic and error handling
+class APIRetryWrapper {
+  private static readonly MAX_RETRIES = 5;
+  private static readonly RETRY_DELAY = 1000; // 1 second
+
+  static async withRetry<T>(
+    operation: () => Promise<T>,
+    operationName: string,
+    maxRetries: number = this.MAX_RETRIES
+  ): Promise<T> {
+    let lastError: any;
+    
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        console.log(`[API] Attempt ${attempt}/${maxRetries} for ${operationName}`);
+        const result = await operation();
+        
+        if (attempt > 1) {
+          console.log(`[API] Success on attempt ${attempt} for ${operationName}`);
+        }
+        
+        return result;
+      } catch (error: any) {
+        lastError = error;
+        console.error(`[API] Attempt ${attempt} failed for ${operationName}:`, error);
+        
+        // Don't retry on authentication errors or 4xx client errors
+        if (error.response?.status >= 400 && error.response?.status < 500) {
+          console.log(`[API] Client error ${error.response.status}, not retrying`);
+          throw error;
+        }
+        
+        // If this is the last attempt, throw the error
+        if (attempt === maxRetries) {
+          console.error(`[API] All ${maxRetries} attempts failed for ${operationName}`);
+          throw error;
+        }
+        
+        // Wait before retrying with exponential backoff
+        const delay = this.RETRY_DELAY * Math.pow(2, attempt - 1);
+        console.log(`[API] Waiting ${delay}ms before retry...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      }
+    }
+    
+    throw lastError;
+  }
+}
+
+// Enhanced error handler
+const handleAPIError = (error: any, operation: string) => {
+  console.error(`[API Error] ${operation}:`, error);
+  
+  if (error.response) {
+    // Server responded with error status
+    const status = error.response.status;
+    const message = error.response.data?.message || error.response.data?.error || 'Server error';
+    
+    switch (status) {
+      case 401:
+        toast.error('Authentication failed. Please log in again.');
+        break;
+      case 403:
+        toast.error('Access denied. You don\'t have permission for this action.');
+        break;
+      case 404:
+        toast.error('The requested resource was not found.');
+        break;
+      case 429:
+        toast.error('Too many requests. Please wait a moment and try again.');
+        break;
+      case 500:
+        toast.error('Server error. Please try again later.');
+        break;
+      case 502:
+      case 503:
+      case 504:
+        toast.error('Service temporarily unavailable. Please try again later.');
+        break;
+      default:
+        toast.error(`Error: ${message}`);
+    }
+    
+    return { success: false, error: message, status };
+  } else if (error.request) {
+    // Network error (no response received)
+    toast.error('Network error. Please check your internet connection.');
+    return { success: false, error: 'Network error', status: 0 };
+  } else {
+    // Other errors
+    toast.error(`Request failed: ${error.message}`);
+    return { success: false, error: error.message, status: -1 };
+  }
+};
+
+// Define API structure type
+interface APIEndpoints {
+  baseURL: string;
+  auth: {
+    register: string;
+    login: string;
+    google: string;
+    logout: string;
+    me: string;
+    forgotPassword: string;
+    verifyResetCode: string;
+    resetPassword: string;
+  };
+  teams: {
+    list: string;
+    create: string;
+    get: (id: string) => string;
+    update: (id: string) => string;
+    delete: (id: string) => string;
+    players: (id: string) => string;
+  };
+  players: {
+    list: string;
+    create: string;
+    get: (id: string) => string;
+    update: (id: string) => string;
+    delete: (id: string) => string;
+    stats: (id: string) => string;
+  };
+  matches: {
+    list: string;
+    create: string;
+    get: (id: string) => string;
+    update: (id: string) => string;
+    delete: (id: string) => string;
+    stats: (id: string) => string;
+    events: (id: string) => string;
+  };
+  chatbot: {
+    chat: string;
+    history: string;
+    suggestions: string;
+    clear: string;
+  };
+  analytics: {
+    dashboard: string;
+    team: (id: string) => string;
+    player: (id: string) => string;
+    matches: string;
+    export: string;
+  };
+  upload: {
+    image: string;
+    document: string;
+    delete: (id: string) => string;
+  };
+  subscription: {
+    plans: string;
+    create: string;
+    current: string;
+    cancel: string;
+    upgrade: string;
+  };
+  health: string;
+  aiChat: {
+    messages: string;
+    history: string;
+    conversation: string;
+  };
+}
 
 // Define the AuthAPI interface to include all methods
 interface AuthAPI {
@@ -16,13 +181,13 @@ interface AuthAPI {
   refreshToken: (data: { token: string }) => Promise<any>;
 }
 
-// API Configuration - use production URL in production, localhost in development
+// API Configuration - use Railway backend for API calls
 const isProduction = import.meta.env.PROD;
 const API_BASE_URL = isProduction 
-  ? (import.meta.env.VITE_API_URL || 'https://api.statsor.com')
+  ? 'https://web-production-22b3d.up.railway.app'
   : (import.meta.env.VITE_API_URL || 'http://localhost:3001');
 
-export const api = {
+export const api: APIEndpoints = {
   baseURL: API_BASE_URL,
   
   // Auth endpoints
@@ -108,26 +273,42 @@ export const api = {
   aiChat: {
     messages: `${API_BASE_URL}/api/v1/aichat/messages`,
     history: `${API_BASE_URL}/api/v1/aichat/history`,
+    conversation: `${API_BASE_URL}/api/v1/aichat/conversation`,
   },
 };
 
-// Auth API functions
 export const authAPI: AuthAPI = {
   register: async (data: any) => {
-    try {
-      const { data: authData, error } = await supabase.auth.signUp({
-        email: data.email,
-        password: data.password,
-        options: {
-          data: {
-            name: data.name,
-            location: data.location,
+    return await APIRetryWrapper.withRetry(async () => {
+      try {
+        const { data: authData, error } = await supabase.auth.signUp({
+          email: data.email,
+          password: data.password,
+          options: {
+            data: {
+              name: data.name,
+              location: data.location,
+            }
           }
-        }
-      });
+        });
 
-      if (error) {
-        console.error('Registration error:', error);
+        if (error) {
+          console.error('Registration error:', error);
+          throw error;
+        }
+
+        return {
+          data: {
+            success: true,
+            data: {
+              user: authData.user,
+              session: authData.session
+            },
+            message: 'Registration successful!'
+          }
+        };
+      } catch (error: any) {
+        console.error('Registration exception:', error);
         return {
           data: {
             success: false,
@@ -136,38 +317,34 @@ export const authAPI: AuthAPI = {
           }
         };
       }
-
-      return {
-        data: {
-          success: true,
-          data: {
-            user: authData.user,
-            session: authData.session
-          },
-          message: 'Registration successful!'
-        }
-      };
-    } catch (error: any) {
-      console.error('Registration exception:', error);
-      return {
-        data: {
-          success: false,
-          error: error.message,
-          message: 'Registration failed'
-        }
-      };
-    }
+    }, 'User Registration');
   },
   
   login: async (data: any) => {
-    try {
-      const { data: authData, error } = await supabase.auth.signInWithPassword({
-        email: data.email,
-        password: data.password
-      });
+    return await APIRetryWrapper.withRetry(async () => {
+      try {
+        const { data: authData, error } = await supabase.auth.signInWithPassword({
+          email: data.email,
+          password: data.password
+        });
 
-      if (error) {
-        console.error('Login error:', error);
+        if (error) {
+          console.error('Login error:', error);
+          throw error;
+        }
+
+        return {
+          data: {
+            success: true,
+            data: {
+              user: authData.user,
+              session: authData.session
+            },
+            message: 'Login successful'
+          }
+        };
+      } catch (error: any) {
+        console.error('Login exception:', error);
         return {
           data: {
             success: false,
@@ -176,27 +353,7 @@ export const authAPI: AuthAPI = {
           }
         };
       }
-
-      return {
-        data: {
-          success: true,
-          data: {
-            user: authData.user,
-            session: authData.session
-          },
-          message: 'Login successful'
-        }
-      };
-    } catch (error: any) {
-      console.error('Login exception:', error);
-      return {
-        data: {
-          success: false,
-          error: error.message,
-          message: 'Login failed'
-        }
-      };
-    }
+    }, 'User Login');
   },
   
   verifyGoogleToken: async (code: string, codeVerifier: string) => {

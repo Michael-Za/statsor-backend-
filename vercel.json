@@ -13,8 +13,8 @@
   ],
   "env": {
     "VITE_API_URL": "https://web-production-22b3d.up.railway.app",
-    "VITE_APP_URL": "https://statsor-frontend.vercel.app",
-    "VITE_WS_URL": "wss://web-production-22b3d.up.railway.app"
+    "VITE_APP_URL": "https://statsor.com",
+    "VITE_WS_URL": "https://web-production-22b3d.up.railway.app"
   },
   "headers": [
     {

@@ -270,25 +270,57 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (response.data.success) {
         const { user, session } = response.data.data
+        
+        // Enhanced user profile initialization
         const userProfile = {
           id: user?.id || 'user_' + Date.now(),
           email: user?.email || email,
-          name: additionalData?.name || user?.user_metadata?.name || email.split('@')[0],
+          name: user?.user_metadata?.name || additionalData?.name || email.split('@')[0],
           provider: 'email' as const,
           sportSelected: false,
-          created_at: new Date().toISOString(),
-          location: additionalData?.location || ''
+          created_at: user?.created_at || new Date().toISOString(),
+          location: user?.user_metadata?.location || additionalData?.location || '',
+          subscription: {
+            plan: 'free' as const,
+            status: 'active' as const,
+            expiresAt: null
+          },
+          permissions: {
+            canEdit: true,
+            canDelete: true,
+            canCreate: true,
+            canShare: true,
+            canExport: true
+          },
+          features: {
+            analytics: true,
+            teamManagement: true,
+            advancedStats: true,
+            customReports: true
+          }
         }
+        
         setUser(userProfile)
         setIsNewUser(true)
         setHasCompletedOnboarding(false)
 
-        // Secure token storage
-        secureStorage.setItem('auth_token', session?.access_token || 'token_' + Date.now())
-        secureStorage.setItem('statsor_user', JSON.stringify(userProfile))
-        localStorage.removeItem('statsor_onboarding_completed')
-        console.log('[AuthContext] Signup successful, user profile created')
-        return { data: { user: userProfile }, error: null }
+        // Secure token storage with enhanced error handling
+        try {
+          secureStorage.setItem('auth_token', session?.access_token || 'token_' + Date.now())
+          secureStorage.setItem('statsor_user', JSON.stringify(userProfile))
+          localStorage.removeItem('statsor_onboarding_completed')
+          
+          // Initialize CSRF token
+          const csrf = csrfToken.generate()
+          csrfToken.store(csrf)
+          
+          console.log('[AuthContext] Enhanced signup successful, user profile initialized')
+          return { data: { user: userProfile }, error: null }
+        } catch (storageError) {
+          console.error('[AuthContext] Storage error during signup:', storageError)
+          // Continue with user session even if storage fails
+          return { data: { user: userProfile }, error: null }
+        }
       }
       console.error('[AuthContext] Signup failed:', response.data.error || response.data.message)
       return { data: null, error: response.data.error || response.data.message || 'Registration failed' }
@@ -375,7 +407,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `https://statsor.com/api/v1/auth/google/callback`,
+          redirectTo: `${window.location.origin}/api/v1/auth/google/callback`,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',

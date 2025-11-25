@@ -93,7 +93,7 @@ export default defineConfig({
   },
   define: {
     'process.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL || 'https://web-production-22b3d.up.railway.app'),
-    'process.env.VITE_APP_URL': JSON.stringify(process.env.VITE_APP_URL || 'http://localhost:3008')
+    'process.env.VITE_APP_URL': JSON.stringify(process.env.VITE_APP_URL || 'https://statsor.com')
   },
   test: {
     globals: true,
