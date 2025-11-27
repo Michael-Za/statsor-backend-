@@ -1,0 +1,29 @@
+{
+  "name": "Statsor - Football Management Platform",
+  "short_name": "Statsor",
+  "description": "Professional football and futsal team management platform",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4ADE80",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/lovable-uploads/01b5bf86-f2e7-42cd-9465-4d0bb347d2ea.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/lovable-uploads/01b5bf86-f2e7-42cd-9465-4d0bb347d2ea.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["sports", "productivity", "utilities"],
+  "lang": "en",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analytics Dashboard Fix</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #4ade80;
+        }
+        .preview-info {
+            background: rgba(30, 30, 30, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .features {
+            text-align: left;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .feature {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(50, 50, 50, 0.5);
+            border-radius: 5px;
+        }
+        .feature-title {
+            color: #4ade80;
+            font-weight: bold;
+        }
+        a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Analytics Dashboard Fix</h1>
+        
+        <div class="preview-info">
+            <p>I've fixed the JSX syntax error in the AnalyticsDashboard component by correcting a missing closing tag.</p>
+            
+            <div class="features">
+                <div class="feature">
+                    <span class="feature-title">Issue Fixed:</span> 
+                    The component had a missing closing tag for a motion.div element which was causing the Babel parser to fail.
+                </div>
+                <div class="feature">
+                    <span class="feature-title">Solution:</span> 
+                    Replaced the incorrect motion.div closing tag with a proper div closing tag to match the opening element.
+                </div>
+                <div class="feature">
+                    <span class="feature-title">Impact:</span> 
+                    The advanced analytics page should now load correctly without the JSX parsing error.
+                </div>
+            </div>
+            
+            <p>To view the advanced analytics page, please visit:</p>
+            <p><a href="http://localhost:3009/advanced-analytics" target="_blank">http://localhost:3009/advanced-analytics</a></p>
+            
+            <p><em>Note: Make sure the development server is running. If the link doesn't work, check the terminal output for the correct port.</em></p>
+        </div>
+    </div>
+</body>
+</html>

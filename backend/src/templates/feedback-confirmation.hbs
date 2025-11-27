@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank you for your feedback - {{platformName}}</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #10B981, #059669); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+        .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
+        .footer { text-align: center; margin-top: 30px; color: #666; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>¡Gracias por tu feedback! / Thank you for your feedback!</h1>
+        </div>
+        <div class="content">
+            <h2>Hola {{name}} / Hello {{name}},</h2>
+            
+            <p><strong>¡Gracias por tomarte el tiempo de enviarnos tu feedback!</strong> Tu opinión es muy valiosa para nosotros y nos ayuda a mejorar {{platformName}}.</p>
+            
+            <p><strong>Thank you for taking the time to send us your feedback!</strong> Your opinion is very valuable to us and helps us improve {{platformName}}.</p>
+            
+            <h3>¿Qué sigue? / What's next?</h3>
+            <ul>
+                <li>📧 Hemos recibido tu mensaje y lo revisaremos cuidadosamente / We've received your message and will review it carefully</li>
+                <li>⏰ Te responderemos dentro de 24-48 horas / We'll respond within 24-48 hours</li>
+                <li>🚀 Tu feedback nos ayuda a hacer {{platformName}} mejor para todos / Your feedback helps us make {{platformName}} better for everyone</li>
+            </ul>
+            
+            <p><strong>¿Tienes más sugerencias?</strong> ¡No dudes en contactarnos en cualquier momento!</p>
+            <p><strong>Have more suggestions?</strong> Don't hesitate to contact us anytime!</p>
+        </div>
+        <div class="footer">
+            <p>{{platformName}} - Construyendo el futuro del deporte / Building the future of sports</p>
+        </div>
+    </div>
+</body>
+</html>

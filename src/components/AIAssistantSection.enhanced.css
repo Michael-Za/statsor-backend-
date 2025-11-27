@@ -1,0 +1,198 @@
+/* Custom scrollbar styling for better scrolling experience */
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.scrollbar-thumb-gray-300::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 4px;
+}
+
+.scrollbar-track-gray-100::-webkit-scrollbar-track {
+  background-color: #f3f4f6;
+}
+
+.scrollbar-thumb-gray-600::-webkit-scrollbar-thumb {
+  background-color: #4b5563;
+  border-radius: 4px;
+}
+
+.scrollbar-track-gray-800::-webkit-scrollbar-track {
+  background-color: #1f2937;
+}
+
+/* Custom scrollbar width */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Animation for chart elements */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chart-animation {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Responsive design for analytics cards */
+@media (max-width: 768px) {
+  .analytics-card {
+    padding: 1rem;
+  }
+  
+  .key-metrics-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .key-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .analytics-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .analytics-controls > div:first-child {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Smooth scrolling behavior */
+.smooth-scroll {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced card styling for white theme */
+.enhanced-card {
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e7eb;
+  background-color: #ffffff;
+}
+
+.enhanced-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.08);
+}
+
+.enhanced-card.dark {
+  background-color: #1f2937;
+  border-color: #374151;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.enhanced-card.dark:hover {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25);
+}
+
+/* Characterization styling for different data types */
+.positive-insight {
+  border-left: 4px solid #10B981;
+}
+
+.warning-insight {
+  border-left: 4px solid #F59E0B;
+}
+
+.critical-insight {
+  border-left: 4px solid #EF4444;
+}
+
+.informational-insight {
+  border-left: 4px solid #3B82F6;
+}
+
+/* Chart container styling */
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Loading animation for charts */
+.chart-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #9CA3AF;
+}
+
+.chart-loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #E5E7EB;
+  border-top: 2px solid #3B82F6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Improved white theme styling */
+.white-theme {
+  background-color: #ffffff;
+  color: #1f2937;
+}
+
+.white-theme .card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.white-theme .card-header {
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.white-theme .input {
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #1f2937;
+}
+
+.white-theme .input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.white-theme .button {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+.white-theme .button:hover {
+  background-color: #2563eb;
+}
+
+.white-theme .message-user {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+.white-theme .message-ai {
+  background-color: #f3f4f6;
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
+}
+
+/* History tab styling */
+.history-card {
+  transition: all 0.2s ease;
+}
+
+.history-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}

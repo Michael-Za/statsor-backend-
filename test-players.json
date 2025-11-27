@@ -1,0 +1,21 @@
+[
+  {
+    "id": "10",
+    "name": "JSON Test Player",
+    "position": "DEF",
+    "age": 26,
+    "nationality": "JSONland",
+    "goals": 2,
+    "assists": 1,
+    "minutes": 500,
+    "fitness": 88,
+    "skills": {
+      "technical": 75,
+      "physical": 85,
+      "tactical": 80,
+      "mental": 78
+    },
+    "medicalClearance": true,
+    "notes": "Test player from JSON import"
+  }
+]

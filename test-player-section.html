@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Player Section Test</title>
+</head>
+<body>
+    <h1>Player Section Test</h1>
+    <p>This page tests the player section functionality.</p>
+    
+    <script>
+        // Set demo mode for testing
+        localStorage.setItem('user_type', 'demo');
+        localStorage.setItem('is_demo_account', 'true');
+        
+        // Log test information
+        console.log('Demo mode enabled for testing');
+        console.log('User type:', localStorage.getItem('user_type'));
+        console.log('Is demo account:', localStorage.getItem('is_demo_account'));
+    </script>
+    
+    <script src="test-player-section.js"></script>
+</body>
+</html>

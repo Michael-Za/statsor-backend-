@@ -1,0 +1,16 @@
+name: Keep CodeSandbox Alive
+
+on:
+  schedule:
+    # Run every 5 minutes
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping CodeSandbox
+        run: |
+          curl -s https://gw6624-2222.csb.app/api/v1/health || echo "Ping failed"
+          echo "🚀 Sandbox pinged at $(date)"

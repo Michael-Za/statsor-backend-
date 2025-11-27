@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statsor Demo Access</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #2c3e50, #4a235a);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #00c9ff, #92fe9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #ccc;
+            line-height: 1.6;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #00c9ff;
+        }
+        
+        .feature-desc {
+            font-size: 0.95rem;
+            color: #aaa;
+            line-height: 1.5;
+        }
+        
+        .btn {
+            background: linear-gradient(90deg, #00c9ff, #92fe9d);
+            color: #000;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 201, 255, 0.4);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 201, 255, 0.6);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .instructions {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .instructions h2 {
+            color: #92fe9d;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .steps {
+            counter-reset: step-counter;
+            list-style: none;
+        }
+        
+        .steps li {
+            counter-increment: step-counter;
+            margin-bottom: 15px;
+            padding-left: 40px;
+            position: relative;
+        }
+        
+        .steps li:before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: linear-gradient(90deg, #00c9ff, #92fe9d);
+            color: #000;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .note {
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 4px solid gold;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            text-align: left;
+        }
+        
+        .note h3 {
+            color: gold;
+            margin-bottom: 8px;
+        }
+        
+        footer {
+            margin-top: 30px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚽ Statsor Demo Access</h1>
+        <p class="subtitle">Experience our football management platform with sample data before creating your account</p>
+        
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3 class="feature-title">Player Management</h3>
+                <p class="feature-desc">View and manage 4 sample players with detailed statistics and performance data</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title">Analytics Dashboard</h3>
+                <p class="feature-desc">Explore performance analytics and team statistics with visual charts</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3 class="feature-title">Match Tracking</h3>
+                <p class="feature-desc">Track matches, results, and player performance in real-time</p>
+            </div>
+        </div>
+        
+        <button class="btn" onclick="setupDemoAccount()">🚀 Start Demo Experience</button>
+        
+        <div class="instructions">
+            <h2>How to Access the Demo</h2>
+            <ol class="steps">
+                <li>Click the "Start Demo Experience" button above</li>
+                <li>You'll be automatically redirected to the dashboard</li>
+                <li>Explore all features with sample data</li>
+                <li>No registration required - completely free to try</li>
+            </ol>
+        </div>
+        
+        <div class="note">
+            <h3>💡 Important Note</h3>
+            <p>This is a demo account with sample data. To access real player data and features, you'll need to create a real account. The demo account is completely separate from real accounts and doesn't require any personal information.</p>
+        </div>
+        
+        <footer>
+            <p>Statsor Football Management Platform • Demo Account System</p>
+        </footer>
+    </div>
+
+    <script>
+        function setupDemoAccount() {
+            // Demo user data
+            const demoUser = {
+                id: 'demo_' + Date.now(),
+                email: 'demo@statsor.com',
+                name: 'Demo User',
+                provider: 'demo',
+                sportSelected: true,
+                created_at: new Date().toISOString()
+            };
+            
+            // Demo account data
+            const demoData = {
+                players: [
+                    {
+                        id: 'demo-1',
+                        name: 'Marcus Johnson',
+                        first_name: 'Marcus',
+                        last_name: 'Johnson',
+                        position: 'Forward',
+                        age: 24,
+                        nationality: 'England',
+                        jersey_number: 9,
+                        height: 185,
+                        weight: 78,
+                        rating: 87,
+                        matches: 28,
+                        goals: 15,
+                        assists: 8,
+                        yellow_cards: 3,
+                        red_cards: 0,
+                        status: 'active',
+                        contract_end: '2025-06-30',
+                        salary: 45000,
+                        market_value: 2500000,
+                        skills: {
+                            technical: 85,
+                            physical: 80,
+                            tactical: 78,
+                            mental: 88
+                        },
+                        team_id: 'demo-team-1',
+                        created_at: '2024-01-15T10:00:00Z',
+                        updated_at: '2024-12-15T14:30:00Z'
+                    },
+                    {
+                        id: 'demo-2',
+                        name: 'Alessandro Rodriguez',
+                        first_name: 'Alessandro',
+                        last_name: 'Rodriguez',
+                        position: 'Midfielder',
+                        age: 26,
+                        nationality: 'Spain',
+                        jersey_number: 8,
+                        height: 178,
+                        weight: 72,
+                        rating: 84,
+                        matches: 30,
+                        goals: 6,
+                        assists: 12,
+                        yellow_cards: 5,
+                        red_cards: 1,
+                        status: 'active',
+                        contract_end: '2026-06-30',
+                        salary: 38000,
+                        market_value: 1800000,
+                        skills: {
+                            technical: 72,
+                            physical: 70,
+                            tactical: 85,
+                            mental: 75
+                        },
+                        team_id: 'demo-team-1',
+                        created_at: '2024-01-15T10:00:00Z',
+                        updated_at: '2024-12-15T14:30:00Z'
+                    },
+                    {
+                        id: 'demo-3',
+                        name: 'David Thompson',
+                        first_name: 'David',
+                        last_name: 'Thompson',
+                        position: 'Defender',
+                        age: 29,
+                        nationality: 'Scotland',
+                        jersey_number: 4,
+                        height: 190,
+                        weight: 85,
+                        rating: 82,
+                        matches: 32,
+                        goals: 2,
+                        assists: 3,
+                        yellow_cards: 8,
+                        red_cards: 0,
+                        status: 'active',
+                        contract_end: '2024-06-30',
+                        salary: 32000,
+                        market_value: 1200000,
+                        skills: {
+                            technical: 45,
+                            physical: 88,
+                            tactical: 78,
+                            mental: 65
+                        },
+                        team_id: 'demo-team-1',
+                        created_at: '2024-01-15T10:00:00Z',
+                        updated_at: '2024-12-15T14:30:00Z'
+                    },
+                    {
+                        id: 'demo-4',
+                        name: 'Lucas Silva',
+                        first_name: 'Lucas',
+                        last_name: 'Silva',
+                        position: 'Goalkeeper',
+                        age: 27,
+                        nationality: 'Brazil',
+                        jersey_number: 1,
+                        height: 192,
+                        weight: 88,
+                        rating: 85,
+                        matches: 30,
+                        goals: 0,
+                        assists: 1,
+                        yellow_cards: 2,
+                        red_cards: 0,
+                        status: 'active',
+                        contract_end: '2025-06-30',
+                        salary: 40000,
+                        market_value: 1500000,
+                        skills: {
+                            technical: 68,
+                            physical: 85,
+                            tactical: 75,
+                            mental: 70
+                        },
+                        team_id: 'demo-team-1',
+                        created_at: '2024-01-15T10:00:00Z',
+                        updated_at: '2024-12-15T14:30:00Z'
+                    }
+                ],
+                club: {
+                    id: 'demo-team-1',
+                    name: 'Statsor FC',
+                    founded: 1995,
+                    stadium: 'Victory Stadium',
+                    capacity: 45000,
+                    address: '123 Football Street',
+                    phone: '+1-234-567-8900',
+                    email: 'info@statsorfc.com',
+                    budget: 15000000,
+                    trophies: 3,
+                    notes: 'Demo club for testing purposes'
+                },
+                matches: [
+                    {
+                        id: 'match-1',
+                        opponent: 'Arsenal FC',
+                        date: '2024-12-20',
+                        result: 'win',
+                        score: '2-1',
+                        venue: 'home',
+                        competition: 'Premier League',
+                        attendance: 42000
+                    },
+                    {
+                        id: 'match-2',
+                        opponent: 'Manchester City',
+                        date: '2024-12-15',
+                        result: 'draw',
+                        score: '1-1',
+                        venue: 'away',
+                        competition: 'Premier League',
+                        attendance: 55000
+                    }
+                ]
+            };
+            
+            // Store demo data
+            localStorage.setItem('auth_token', 'demo-token-' + Date.now());
+            localStorage.setItem('statsor_user', JSON.stringify(demoUser));
+            localStorage.setItem('user_type', 'demo');
+            localStorage.setItem('statsor_sport', 'soccer');
+            localStorage.setItem('statsor_sport_selection_completed', 'true');
+            localStorage.setItem('demo_account_data', JSON.stringify(demoData));
+            
+            // Show success message
+            alert('🎉 Demo account created successfully! You will now be redirected to the dashboard.');
+            
+            // Redirect to dashboard
+            window.location.href = '/dashboard';
+        }
+    </script>
+</body>
+</html>

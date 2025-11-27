@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Received - Thank You!</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: #4ADE80;
+            margin-bottom: 10px;
+        }
+        .feedback-box {
+            background: #f8f9fa;
+            border-left: 4px solid #4ADE80;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .priority-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .priority-high {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .priority-medium {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .priority-normal {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+        .response-time {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Statsor</div>
+            <h1>Thank You for Your Feedback! 🙏</h1>
+        </div>
+
+        <p>Hello <strong>{{user.name}}</strong>,</p>
+
+        <p>We've received your feedback and truly appreciate you taking the time to help us improve Statsor. Your input is invaluable in making our platform better for all coaches and teams.</p>
+
+        <div class="feedback-box">
+            <h3>📝 Your Feedback:</h3>
+            <p><em>"{{message}}"</em></p>
+            
+            <p><strong>Category:</strong> {{category}}</p>
+            <p><strong>Priority:</strong> 
+                <span class="priority-badge priority-{{priority}}">{{priority}}</span>
+            </p>
+        </div>
+
+        <div class="response-time">
+            <h3>⏰ What Happens Next?</h3>
+            <p><strong>Expected Response Time:</strong> {{responseTime}}</p>
+            
+            {{#if_eq priority "high"}}
+                <p>🚨 Your feedback has been marked as <strong>high priority</strong> and will be reviewed by our team immediately.</p>
+            {{else}}
+                <p>✅ Your feedback has been added to our review queue and will be processed in order.</p>
+            {{/if_eq}}
+            
+            <ul>
+                <li>📧 We'll send you an email update when we've reviewed your feedback</li>
+                <li>🔧 If it's a bug report, we'll notify you when it's fixed</li>
+                <li>💡 If it's a feature request, we'll keep you posted on development progress</li>
+            </ul>
+        </div>
+
+        <p>In the meantime, feel free to continue using Statsor and don't hesitate to send us more feedback. We're constantly working to improve the platform based on user input like yours.</p>
+
+        <h3>🤝 Stay Connected:</h3>
+        <ul>
+            <li>📱 Follow us on social media for updates</li>
+            <li>📧 Check your email for our monthly newsletter</li>
+            <li>💬 Join our community forum for tips and discussions</li>
+        </ul>
+
+        <p>Thank you again for being part of the Statsor community!</p>
+
+        <p>Best regards,<br>
+        <strong>The Statsor Support Team</strong></p>
+
+        <div class="footer">
+            <p>© 2025 Statsor. All rights reserved.</p>
+            <p>Need immediate help? Contact us at <a href="mailto:support@statsor.com">support@statsor.com</a></p>
+        </div>
+    </div>
+</body>
+</html>

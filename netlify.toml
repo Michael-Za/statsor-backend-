@@ -1,0 +1,54 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "18"
+  NPM_VERSION = "9"
+  VITE_API_URL = "https://api.statsor.com"
+  VITE_APP_URL = "https://statsor.com"
+  VITE_WS_URL = "wss://api.statsor.com"
+  VITE_SUPABASE_URL = "https://kieihchqtyqquvispker.supabase.co"
+  VITE_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtpZWloY2hxdHlxcXV2aXNwa2VyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2MzIyOTEsImV4cCI6MjA3NjIwODI5MX0.RTyUZcmdKv5Q24GBCsQPmYkyALAI4uz8y1m1ezh5g0g"
+  VITE_GOOGLE_CLIENT_ID = "418379516613-1695v51lvdao41iebs7k06954i6o5221.apps.googleusercontent.com"
+  VITE_GROQ_API_KEY = "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"
+
+# Redirect API calls to Railway backend
+[[redirects]]
+  from = "/api/*"
+  to = "https://statsor-backend.railway.app/api/:splat"
+  status = 200
+  force = true
+
+# Handle client-side routing (React Router)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Security headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Cache static assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# PWA support
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

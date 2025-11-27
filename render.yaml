@@ -1,0 +1,35 @@
+services:
+  # Frontend Service
+  - type: web
+    name: statsor-frontend
+    env: static
+    buildCommand: npm run build
+    staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://api.statsor.com/api/*
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: https://api.statsor.com
+      - key: VITE_APP_URL
+        value: https://statsor.com
+
+  # Backend API Service
+  - type: web
+    name: statsor-backend
+    env: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: FRONTEND_URL
+        value: https://statsor.com
+      - key: CORS_ORIGIN
+        value: https://statsor.com 

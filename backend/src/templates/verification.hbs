@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify your email - {{platformName}}</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #3B82F6, #1D4ED8); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+        .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
+        .button { display: inline-block; background: #3B82F6; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; margin: 20px 0; font-weight: bold; }
+        .footer { text-align: center; margin-top: 30px; color: #666; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Verifica tu email / Verify your email</h1>
+        </div>
+        <div class="content">
+            <h2>Hola {{name}} / Hello {{name}},</h2>
+            
+            <p><strong>¡Casi terminamos!</strong> Solo necesitas verificar tu dirección de email para completar tu registro en {{platformName}}.</p>
+            
+            <p><strong>We're almost done!</strong> You just need to verify your email address to complete your registration on {{platformName}}.</p>
+            
+            <div style="text-align: center;">
+                <a href="{{verificationUrl}}" class="button">Verificar Email / Verify Email</a>
+            </div>
+            
+            <p><strong>¿No puedes hacer clic en el botón?</strong> Copia y pega este enlace en tu navegador:</p>
+            <p><strong>Can't click the button?</strong> Copy and paste this link into your browser:</p>
+            <p style="word-break: break-all; color: #3B82F6;">{{verificationUrl}}</p>
+            
+            <p><em>Este enlace expirará en 24 horas por seguridad.</em></p>
+            <p><em>This link will expire in 24 hours for security.</em></p>
+        </div>
+        <div class="footer">
+            <p>{{platformName}} - Tu plataforma de gestión deportiva / Your sports management platform</p>
+        </div>
+    </div>
+</body>
+</html>

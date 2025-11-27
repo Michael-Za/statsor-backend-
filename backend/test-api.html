@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+</head>
+<body>
+    <h1>Backend API Test</h1>
+    
+    <button onclick="testHealth()">Test Health Endpoint</button>
+    <button onclick="testEmail()">Test Email Endpoint</button>
+    
+    <div id="result"></div>
+
+    <script>
+        const baseUrl = 'http://localhost:3003';
+        
+        async function testHealth() {
+            try {
+                const response = await fetch(`${baseUrl}/health`);
+                const data = await response.json();
+                document.getElementById('result').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            } catch (error) {
+                document.getElementById('result').innerHTML = `<p>Error: ${error.message}</p>`;
+            }
+        }
+        
+        async function testEmail() {
+            try {
+                const response = await fetch(`${baseUrl}/api/email`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'sendWelcome',
+                        user: {
+                            first_name: 'John',
+                            last_name: 'Doe',
+                            email: 'statsor1@gmail.com'
+                        }
+                    })
+                });
+                
+                const data = await response.json();
+                document.getElementById('result').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            } catch (error) {
+                document.getElementById('result').innerHTML = `<p>Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
