@@ -1,0 +1,9 @@
+[phases.build]
+cmds = ["cd backend && npm install --production"]
+
+[start]
+cmd = "node server.js"
+
+[variables]
+PHASE_1_CMD = "cd backend && npm install --production"
+START_CMD = "node server.js"

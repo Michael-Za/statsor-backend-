@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: statsor-config
+  namespace: statsor
+data:
+  NODE_ENV: "production"
+  LOG_LEVEL: "info"
+  RATE_LIMIT_WINDOW_MS: "900000"
+  RATE_LIMIT_MAX_REQUESTS: "100"
+  MAX_FILE_SIZE: "10485760"
+  CORS_ORIGIN: "*"
+  JWT_EXPIRES_IN: "24h"

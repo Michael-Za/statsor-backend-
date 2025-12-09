@@ -1,0 +1,9 @@
+{
+  "verbose": true,
+  "ignore": ["*.test.js", "*.spec.js", ".git", "node_modules"],
+  "execMap": {
+    "js": "node --loader ts-node/esm"
+  },
+  "watch": ["src"],
+  "ext": "js,json"
+}

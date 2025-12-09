@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "name": "statsor-backend",
+  "builds": [
+    {
+      "src": "src/index.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/src/index.ts"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/src/index.ts"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "FRONTEND_URL": "https://statsor.com",
+    "CORS_ORIGIN": "https://statsor.com"
+  }
+}
